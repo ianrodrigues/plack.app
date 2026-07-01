@@ -22,10 +22,10 @@ type Channel = {
 };
 
 export default function EditChannelDialog({
-    workspaceId,
+    workspaceSlug,
     channel,
 }: {
-    workspaceId: string;
+    workspaceSlug: string;
     channel: Channel;
 }) {
     const [open, setOpen] = useState(false);
@@ -45,7 +45,7 @@ export default function EditChannelDialog({
 
                 <Form
                     {...ChannelController.update.form({
-                        workspace: workspaceId,
+                        workspace: workspaceSlug,
                         channel: channel.id,
                     })}
                     options={{

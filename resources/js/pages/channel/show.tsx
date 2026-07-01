@@ -13,6 +13,7 @@ import type { BreadcrumbItem } from '@/types';
 type Workspace = {
     id: string;
     name: string;
+    slug: string;
 };
 
 type User = {
@@ -44,11 +45,14 @@ export default function ChannelShow({ channel }: { channel: Channel }) {
         },
         {
             title: workspace.name,
-            href: workspaceShow(workspace.id),
+            href: workspaceShow(workspace.slug),
         },
         {
             title: channel.name,
-            href: channelShow({ workspace: workspace.id, channel: channel.id }),
+            href: channelShow({
+                workspace: workspace.slug,
+                channel: channel.id,
+            }),
         },
     ];
 
@@ -64,7 +68,7 @@ export default function ChannelShow({ channel }: { channel: Channel }) {
                     />
 
                     <EditChannelDialog
-                        workspaceId={workspace.id}
+                        workspaceSlug={workspace.slug}
                         channel={channel}
                     />
                 </div>
@@ -104,7 +108,7 @@ export default function ChannelShow({ channel }: { channel: Channel }) {
 
                 <Form
                     {...MessageController.store.form({
-                        workspace: workspace.id,
+                        workspace: workspace.slug,
                         channel: channel.id,
                     })}
                     options={{ preserveScroll: true }}
