@@ -16,6 +16,7 @@ type Channel = {
 type Workspace = {
     id: string;
     name: string;
+    slug: string;
     channels: Channel[];
 };
 

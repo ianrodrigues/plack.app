@@ -10,7 +10,7 @@ use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 
-final readonly class SendMessage
+final readonly class CreateMessage
 {
     public function __construct(
         private CreateAttachment $createAttachment,
@@ -19,16 +19,16 @@ final readonly class SendMessage
     /**
      * @param  array<int, UploadedFile>  $attachments
      */
-    public function handle(Channel $channel, User $sender, ?string $body = null, array $attachments = []): Message
+    public function handle(Channel $channel, User $user, ?string $body = null, array $attachments = []): Message
     {
-        return DB::transaction(function () use ($channel, $sender, $body, $attachments): Message {
+        return DB::transaction(function () use ($channel, $user, $body, $attachments): Message {
             $message = $channel->messages()->create([
-                'user_id' => $sender->id,
+                'user_id' => $user->id,
                 'body' => $body,
             ]);
 
             foreach ($attachments as $file) {
-                $this->createAttachment->handle($channel, $message, $sender, $file);
+                $this->createAttachment->handle($channel, $message, $user, $file);
             }
 
             return $message;

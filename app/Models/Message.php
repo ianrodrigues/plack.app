@@ -40,9 +40,9 @@ final class Message extends Model
     /**
      * @return BelongsTo<User, $this>
      */
-    public function sender(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
     /**
